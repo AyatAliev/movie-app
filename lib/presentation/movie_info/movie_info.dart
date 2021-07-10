@@ -7,8 +7,8 @@ import 'package:flutter_api_with_retrofit/utils/constants.dart';
 import 'package:provider/provider.dart';
 
 class MovieInfo extends StatefulWidget {
-  static String id = 'MovieInfo';
   var movieId = 0;
+
   MovieInfo(this.movieId);
 
   @override
@@ -39,41 +39,46 @@ class _MovieInfoWidgetState extends State<MovieInfo> {
   }
 
   Widget _buildLoadingWidget() {
-    return Center(
-        child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [CircularProgressIndicator()],
-    ));
+    return Scaffold(
+      body: Center(
+          child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [CircularProgressIndicator()],
+      )),
+    );
   }
 
   Widget _buildErrorWidget(String error) {
-    return Center(
-        child: Column(
+    return Scaffold(
+        body: Center(
+            child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text("Error occurred: $error"),
       ],
-    ));
+    )));
   }
 
   Widget _buildMovieInfo(BuildContext context, MovieInfoEntity movie) {
-    return Container(
-        alignment: Alignment.topLeft,
-        child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Container(
-                  width: 200,
-                  height: 300,
-                  child: Image.network(MOVIE_BASE_URL + movie.posterPath),
-                  alignment: Alignment.topLeft,
-                  margin: EdgeInsets.fromLTRB(16, 32, 16, 16)),
-              Expanded(
-                  child: Container(
-                      margin: EdgeInsets.fromLTRB(8, 48, 0, 0),
-                      child: Text(movie.title,
-                          style: TextStyle(fontSize: 24, color: Colors.cyan)))),
-            ]));
+    return Scaffold(
+        body: Container(
+            alignment: Alignment.topLeft,
+            child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Container(
+                      width: 200,
+                      height: 300,
+                      child: Image.network(MOVIE_BASE_URL + movie.posterPath),
+                      alignment: Alignment.topLeft,
+                      margin: EdgeInsets.fromLTRB(16, 32, 16, 16)),
+                  Expanded(
+                      child: Container(
+                          margin: EdgeInsets.fromLTRB(8, 48, 0, 0),
+                          child: Text(movie.title,
+                              style: TextStyle(
+                                  fontSize: 24, color: Colors.cyan)))),
+                ])));
   }
 }
