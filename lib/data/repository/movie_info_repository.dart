@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_api_with_retrofit/network/api_service.dart';
+import 'package:flutter_api_with_retrofit/data/api/service/api_service.dart';
 
 class MovieInfoRepository {
 

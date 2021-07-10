@@ -1,4 +1,4 @@
-import 'package:flutter_api_with_retrofit/model/movie_info_entity.dart';
+import 'package:flutter_api_with_retrofit/domain/model/movie_info_entity.dart';
 
 movieInfoEntityFromJson(MovieInfoEntity data, Map<String, dynamic> json) {
 	if (json['adult'] != null) {

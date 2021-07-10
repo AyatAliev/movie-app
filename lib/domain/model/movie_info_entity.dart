@@ -1,5 +1,5 @@
-import 'package:flutter_api_with_retrofit/generated/json/base/json_convert_content.dart';
-import 'package:flutter_api_with_retrofit/generated/json/base/json_field.dart';
+import 'package:flutter_api_with_retrofit/data/api/generated/json/base/json_convert_content.dart';
+import 'package:flutter_api_with_retrofit/data/api/generated/json/base/json_field.dart';
 
 class MovieInfoEntity with JsonConvert<MovieInfoEntity> {
 	bool adult;

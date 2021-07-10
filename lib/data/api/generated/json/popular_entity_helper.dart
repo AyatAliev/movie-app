@@ -1,4 +1,4 @@
-import 'package:flutter_api_with_retrofit/model/popular_entity.dart';
+import 'package:flutter_api_with_retrofit/domain/model/popular_entity.dart';
 
 popularEntityFromJson(PopularEntity data, Map<String, dynamic> json) {
 	if (json['page'] != null) {

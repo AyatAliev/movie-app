@@ -1,7 +1,7 @@
-import 'package:flutter_api_with_retrofit/model/movie_info_entity.dart';
+import 'package:flutter_api_with_retrofit/domain/model/movie_info_entity.dart';
 import 'package:flutter_api_with_retrofit/utils/constants.dart';
 import 'package:rxdart/rxdart.dart';
-import 'movie_info_repository.dart';
+import '../../data/repository/movie_info_repository.dart';
 
 class MovieInfoBloc {
 
@@ -21,4 +21,3 @@ class MovieInfoBloc {
   BehaviorSubject<MovieInfoEntity> get subject => _subject;
 
 }
-final movieInfoBloc = MovieInfoBloc();

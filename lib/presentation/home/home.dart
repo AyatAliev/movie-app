@@ -1,38 +1,34 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_api_with_retrofit/ui/home/home_bloc.dart';
-import 'package:flutter_api_with_retrofit/ui/movie_info/movie_info.dart';
+import 'package:flutter_api_with_retrofit/domain/bloc/home_bloc.dart';
+import 'package:flutter_api_with_retrofit/domain/model/popular_entity.dart';
+import 'package:flutter_api_with_retrofit/presentation/movie_info/movie_info.dart';
 import 'package:flutter_api_with_retrofit/utils/constants.dart';
-import '../model/popular_entity.dart';
+import 'package:provider/provider.dart';
 
-class MovieWidget extends StatefulWidget {
+class Home extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() {
-    return _MovieWidgetState();
-  }
+  _HomeState createState() => _HomeState();
 }
 
-class _MovieWidgetState extends State<MovieWidget> {
-  @override
-  void initState() {
-    super.initState();
-    homeBloc.moviePopular();
-  }
+class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<PopularEntity>(
-      stream: homeBloc.subject.stream,
-      builder: (context, AsyncSnapshot<PopularEntity> snapshot) {
-        if (snapshot.hasData) {
-          return _buildListView(context, snapshot.data);
-        } else if (snapshot.hasError) {
-          return _buildErrorWidget(snapshot.error);
-        } else {
-          return _buildLoadingWidget();
-        }
-      },
-    );
+    return Consumer<HomeBloc>(builder: (context, _homeBloc, child) {
+      return StreamBuilder<PopularEntity>(
+        stream: _homeBloc.subject,
+        builder: (context, AsyncSnapshot<PopularEntity> snapshot) {
+          if (snapshot.hasData) {
+            return _buildListView(context, snapshot.data);
+          } else if (snapshot.hasError) {
+            return _buildErrorWidget(snapshot.error);
+          } else {
+            return _buildLoadingWidget();
+          }
+        },
+      );
+    });
   }
 
   Widget _buildLoadingWidget() {
@@ -48,7 +44,7 @@ class _MovieWidgetState extends State<MovieWidget> {
         child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text("Error occured: $error"),
+        Text("Error occurred: $error"),
       ],
     ));
   }
@@ -67,7 +63,10 @@ class _MovieWidgetState extends State<MovieWidget> {
             subtitle: Text(movie.results[index].overview),
             onTap: () {
               Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => MovieInfo(movie.results[index].id)));
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          MovieInfo(movie.results[index].id)));
             },
           ),
         );
