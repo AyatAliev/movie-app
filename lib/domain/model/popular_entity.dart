@@ -1,36 +1,55 @@
-import 'package:flutter_api_with_retrofit/data/api/generated/json/base/json_convert_content.dart';
-import 'package:flutter_api_with_retrofit/data/api/generated/json/base/json_field.dart';
+import 'package:json_annotation/json_annotation.dart';
 
-class PopularEntity with JsonConvert<PopularEntity> {
-	int page;
+part 'popular_entity.g.dart';
+
+@JsonSerializable()
+class PopularEntity {
 	List<PopularResults> results;
-	@JSONField(name: "total_pages")
-	int totalPages;
-	@JSONField(name: "total_results")
-	int totalResults;
+
+	PopularEntity(this.results);
+
+	factory PopularEntity.fromJson(Map<String, dynamic> json) => _$PopularEntityFromJson(json);
+
+	Map<String, dynamic> toJson() => _$PopularEntityToJson(this);
+
 }
 
-class PopularResults with JsonConvert<PopularResults> {
-	bool adult;
-	@JSONField(name: "backdrop_path")
+@JsonSerializable()
+class PopularResults {
+	@JsonKey(name: "backdrop_path")
 	String backdropPath;
-	@JSONField(name: "genre_ids")
-	List<int> genreIds;
 	int id;
-	@JSONField(name: "original_language")
+	@JsonKey(name: "original_language")
 	String originalLanguage;
-	@JSONField(name: "original_title")
+	@JsonKey(name: "original_title")
 	String originalTitle;
 	String overview;
 	double popularity;
-	@JSONField(name: "poster_path")
+	@JsonKey(name: "poster_path")
 	String posterPath;
-	@JSONField(name: "release_date")
+	@JsonKey(name: "release_date")
 	String releaseDate;
 	String title;
-	bool video;
-	@JSONField(name: "vote_average")
+	@JsonKey(name: "vote_average")
 	double voteAverage;
-	@JSONField(name: "vote_count")
+	@JsonKey(name: "vote_count")
 	int voteCount;
+
+	PopularResults(
+			this.backdropPath,
+			this.id,
+			this.originalLanguage,
+			this.originalTitle,
+			this.overview,
+			this.popularity,
+			this.posterPath,
+			this.releaseDate,
+			this.title,
+			this.voteAverage,
+			this.voteCount
+			);
+
+	factory PopularResults.fromJson(Map<String, dynamic> json) => _$PopularResultsFromJson(json);
+
+	Map<String, dynamic> toJson() => _$PopularResultsToJson(this);
 }

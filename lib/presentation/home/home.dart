@@ -1,56 +1,57 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_api_with_retrofit/domain/bloc/home_bloc.dart';
 import 'package:flutter_api_with_retrofit/domain/model/popular_entity.dart';
+import 'package:flutter_api_with_retrofit/presentation/bloc/home_bloc.dart';
 import 'package:flutter_api_with_retrofit/presentation/movie_info/movie_info.dart';
 import 'package:flutter_api_with_retrofit/utils/constants.dart';
 import 'package:flutter_api_with_retrofit/utils/utils.dart';
 import 'package:provider/provider.dart';
 
-class Home extends StatefulWidget {
-  @override
-  _HomeState createState() => _HomeState();
-}
+class Home extends StatelessWidget {
 
-class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
-    return Consumer<HomeBloc>(builder: (context, _homeBloc, child) {
-      return StreamBuilder<PopularEntity>(
-        stream: _homeBloc.subject,
-        builder: (context, AsyncSnapshot<PopularEntity> snapshot) {
-          if (snapshot.hasData) {
-            return _buildGridView(context, snapshot.data);
-          } else if (snapshot.hasError) {
-            return _buildErrorWidget(snapshot.error);
-          } else {
-            return _buildLoadingWidget();
-          }
-        },
-      );
-    });
+    return MultiProvider(
+      providers: [ Provider<HomeBloc>(
+          create: (_) => HomeBloc(),
+          dispose: (_, HomeBloc homeBloc) => homeBloc.dispose()())],
+      child: Consumer<HomeBloc>(builder: (context, _homeBloc, child) {
+        return Scaffold(
+          body: StreamBuilder<PopularEntity>(
+            stream: _homeBloc.subjectMoviePopular.stream,
+            builder: (context, AsyncSnapshot<PopularEntity> snapshot) {
+              if (snapshot.hasData) {
+                return _buildGridView(context, snapshot.data);
+              } else if (snapshot.hasError) {
+                return _buildErrorWidget(snapshot.error);
+              } else {
+                return _buildLoadingWidget();
+              }
+            },
+          ),
+        );
+      }),
+    );
   }
 
   Widget _buildLoadingWidget() {
-    return Scaffold(
-      body: Center(
-          child: Column(
+    return Center(
+      child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [CircularProgressIndicator()],
-      )),
+      ),
     );
   }
 
   Widget _buildErrorWidget(String error) {
-    return Scaffold(
-      body: Center(
-          child: Column(
+    return Center(
+      child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text("Error occurred: $error"),
         ],
-      )),
+      ),
     );
   }
 
@@ -69,7 +70,7 @@ class _HomeState extends State<Home> {
                       child: Card(
                         child: InkResponse(
                           onTap: () {
-                            _onTapHolder(movie.results[index]);
+                            _onTapHolder(context,movie.results[index]);
                           },
                           child: Column(children: [
                             _itemImage(movie.results[index]),
@@ -83,7 +84,7 @@ class _HomeState extends State<Home> {
     );
   }
 
-  _onTapHolder(PopularResults popularResults) {
+  _onTapHolder(BuildContext context,PopularResults popularResults) {
     Navigator.push(context,
         MaterialPageRoute(builder: (context) => MovieInfo(popularResults.id)));
   }
