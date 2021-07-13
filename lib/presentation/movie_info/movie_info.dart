@@ -4,7 +4,6 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_api_with_retrofit/domain/model/movie_info_entity.dart';
 import 'package:flutter_api_with_retrofit/presentation/bloc/movie_info_bloc.dart';
 import 'package:flutter_api_with_retrofit/utils/constants.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
 class MovieInfo extends StatelessWidget {
@@ -14,8 +13,9 @@ class MovieInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<MovieInfoBloc>(
+    return Provider<MovieInfoBloc>(
       create: (_) => MovieInfoBloc(movieId),
+      dispose: (_, MovieInfoBloc movieInfoBloc) => movieInfoBloc.dispose(),
       child: Consumer<MovieInfoBloc>(builder: (context, _movieInfoBloc, child) {
         return SafeArea(
           child: Scaffold(
