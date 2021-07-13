@@ -15,26 +15,29 @@ class MovieInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Provider<MovieInfoBloc>(
         create: (_) => MovieInfoBloc(movieId),
-        dispose: (_, MovieInfoBloc movieInfoBloc) => movieInfoBloc.dispose()(
+        dispose: (_, MovieInfoBloc movieInfoBloc) => movieInfoBloc.dispose(),
               child: Consumer<MovieInfoBloc>(
                   builder: (context, _movieInfoBloc, child) {
-                return Scaffold(
-                  body: StreamBuilder<MovieInfoEntity>(
-                    stream: _movieInfoBloc.subjectMovieInfo,
-                    builder:
-                        (context, AsyncSnapshot<MovieInfoEntity> snapshot) {
-                      if (snapshot.hasData) {
-                        return _buildMovieInfo(context, snapshot.data);
-                      } else if (snapshot.hasError) {
-                        return _buildErrorWidget(snapshot.error);
-                      } else {
-                        return _buildLoadingWidget();
-                      }
-                    },
+                return SafeArea(
+                  child: Scaffold(
+                    backgroundColor: Color.fromARGB(100, 25, 45, 54),
+                    body: StreamBuilder<MovieInfoEntity>(
+                      stream: _movieInfoBloc.subjectMovieInfo.stream,
+                      builder:
+                          (context, AsyncSnapshot<MovieInfoEntity> snapshot) {
+                        if (snapshot.hasData) {
+                          return _buildMovieInfo(context, snapshot.data);
+                        } else if (snapshot.hasError) {
+                          return _buildErrorWidget(snapshot.error);
+                        } else {
+                          return _buildLoadingWidget();
+                        }
+                      },
+                    ),
                   ),
                 );
               }),
-            ));
+            );
   }
 
   Widget _buildLoadingWidget() {

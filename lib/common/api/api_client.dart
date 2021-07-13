@@ -4,7 +4,7 @@ import 'package:flutter_api_with_retrofit/utils/constants.dart';
 
 class ApiClient {
 
-  Future<Response> getInfoMovie(int id, Map<String, String> queryParameters) async {
+  Future<Response<dynamic>> getInfoMovie(int id, Map<String, String> queryParameters) async {
 
     var response = await Dio()
         .get(BASEURL + "3/movie/$id", queryParameters: queryParameters);
@@ -16,7 +16,7 @@ class ApiClient {
     }
   }
 
-  Future<Response> moviePopular(Map<String, String> queryParameters) async {
+  Future<Response<dynamic>> moviePopular(Map<String, String> queryParameters) async {
     var response = await Dio().get(
         BASEURL + "3/movie/popular",queryParameters: queryParameters);
 

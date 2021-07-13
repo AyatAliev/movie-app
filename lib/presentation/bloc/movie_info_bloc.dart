@@ -6,14 +6,15 @@ import 'package:rxdart/rxdart.dart';
 class MovieInfoBloc {
 
   MovieInfoBloc(int id) {
-    _getInfoMovie(id);
+    getInfoMovie(id);
   }
 
   final MovieRepositoryImpl _repository = MovieRepositoryImpl();
-  final BehaviorSubject<MovieInfoEntity> _subjectMovieInfo = BehaviorSubject<MovieInfoEntity>();
-  BehaviorSubject<MovieInfoEntity> get subjectMovieInfo => _subjectMovieInfo;
 
-  _getInfoMovie(int id) async {
+  BehaviorSubject<MovieInfoEntity> get subjectMovieInfo => _subjectMovieInfo;
+  final BehaviorSubject<MovieInfoEntity> _subjectMovieInfo = BehaviorSubject<MovieInfoEntity>();
+
+  getInfoMovie(int id) async {
     var response = await _repository.getInfoMovie(id,queryParams);
     MovieInfoEntity movies = MovieInfoEntity.fromJson(response.data);
     _subjectMovieInfo.sink.add(movies);

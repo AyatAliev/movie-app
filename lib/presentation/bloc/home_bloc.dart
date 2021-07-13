@@ -10,9 +10,8 @@ class HomeBloc {
 
   final MovieRepositoryImpl _repository = MovieRepositoryImpl();
 
-  final BehaviorSubject<PopularEntity> _subjectMoviePopular =
-      BehaviorSubject<PopularEntity>();
   BehaviorSubject<PopularEntity> get subjectMoviePopular => _subjectMoviePopular;
+  final BehaviorSubject<PopularEntity> _subjectMoviePopular = BehaviorSubject<PopularEntity>();
 
   moviePopular() async {
     var response = await _repository.moviePopular(queryParams);

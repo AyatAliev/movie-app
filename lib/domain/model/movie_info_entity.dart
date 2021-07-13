@@ -7,7 +7,6 @@ class MovieInfoEntity {
   bool adult;
   @JsonKey(name: "backdrop_path")
   String backdropPath;
-  @JsonKey(name: "belongs_to_collection")
   int budget;
   List<MovieInfoGenres> genres;
   String homepage;

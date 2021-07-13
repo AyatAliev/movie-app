@@ -9,26 +9,27 @@ import 'package:flutter_api_with_retrofit/utils/utils.dart';
 import 'package:provider/provider.dart';
 
 class Home extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [ Provider<HomeBloc>(
-          create: (_) => HomeBloc(),
-          dispose: (_, HomeBloc homeBloc) => homeBloc.dispose()())],
+    return Provider<HomeBloc>(
+      create: (_) => HomeBloc(),
+      dispose: (_, HomeBloc homeBloc) => homeBloc.dispose(),
       child: Consumer<HomeBloc>(builder: (context, _homeBloc, child) {
-        return Scaffold(
-          body: StreamBuilder<PopularEntity>(
-            stream: _homeBloc.subjectMoviePopular.stream,
-            builder: (context, AsyncSnapshot<PopularEntity> snapshot) {
-              if (snapshot.hasData) {
-                return _buildGridView(context, snapshot.data);
-              } else if (snapshot.hasError) {
-                return _buildErrorWidget(snapshot.error);
-              } else {
-                return _buildLoadingWidget();
-              }
-            },
+        return SafeArea(
+          child: Scaffold(
+            backgroundColor: Color.fromARGB(100, 25, 45, 54),
+            body: StreamBuilder<PopularEntity>(
+              stream: _homeBloc.subjectMoviePopular.stream,
+              builder: (context, AsyncSnapshot<PopularEntity> snapshot) {
+                if (snapshot.hasData) {
+                  return _buildGridView(context, snapshot.data);
+                } else if (snapshot.hasError) {
+                  return _buildErrorWidget(snapshot.error);
+                } else {
+                  return _buildLoadingWidget();
+                }
+              },
+            ),
           ),
         );
       }),
@@ -56,41 +57,36 @@ class Home extends StatelessWidget {
   }
 
   Widget _buildGridView(BuildContext context, PopularEntity movie) {
-    return Container(
-      child: GridView.count(
-          crossAxisCount: 2,
-          children: List.generate(movie.results.length, (index) {
-            return Scaffold(
-                backgroundColor: Color.fromARGB(100, 25, 45, 54),
-                body: Align(
-                    heightFactor: 200.0,
-                    alignment: Alignment.center,
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Card(
-                        child: InkResponse(
-                          onTap: () {
-                            _onTapHolder(context,movie.results[index]);
-                          },
-                          child: Column(children: [
-                            _itemImage(movie.results[index]),
-                            _itemTitle(movie.results[index]),
-                            _itemDescription(movie.results[index])
-                          ]),
-                        ),
-                      ),
-                    )));
-          })),
-    );
+    return GridView.count(
+        crossAxisCount: 2,
+        children: List.generate(movie.results.length, (index) {
+          return Align(
+            heightFactor: 200.0,
+            alignment: Alignment.center,
+            child: Card(
+              margin: EdgeInsets.all(16),
+              child: InkResponse(
+                onTap: () {
+                  _onTapHolder(context, movie.results[index]);
+                },
+                child: Column(children: [
+                  _itemImage(movie.results[index]),
+                  _itemTitle(movie.results[index]),
+                  _itemDescription(movie.results[index])
+                ]),
+              ),
+            ),
+          );
+        }));
   }
 
-  _onTapHolder(BuildContext context,PopularResults popularResults) {
+  _onTapHolder(BuildContext context, PopularResults popularResults) {
     Navigator.push(context,
         MaterialPageRoute(builder: (context) => MovieInfo(popularResults.id)));
   }
 
   _itemImage(PopularResults popularResults) {
-    Expanded(
+    return Expanded(
         child: Card(
             margin: EdgeInsets.zero,
             child: Image.network("$MOVIE_BASE_URL${popularResults.posterPath}",
@@ -98,7 +94,7 @@ class Home extends StatelessWidget {
   }
 
   _itemTitle(PopularResults popularResults) {
-    Align(
+    return Align(
       alignment: Alignment.bottomLeft,
       child: Container(
         margin: EdgeInsets.fromLTRB(12, 8, 0, 0),
@@ -111,7 +107,7 @@ class Home extends StatelessWidget {
   }
 
   _itemDescription(PopularResults result) {
-    Align(
+    return Align(
       alignment: Alignment.bottomLeft,
       child: Container(
         margin: EdgeInsets.fromLTRB(12, 4, 0, 4),

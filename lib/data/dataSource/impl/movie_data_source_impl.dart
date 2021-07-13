@@ -4,17 +4,17 @@ import '../movie_data_source.dart';
 
 class MovieImplDataSource extends MovieDataSource {
 
-  ApiClient _apiClient;
+  ApiClient _apiClient = ApiClient();
 
   @override
-  Future<Response> getInfoMovie(int id, Map<String, String> queryParameters) async {
-    return await _apiClient.getInfoMovie(id, queryParameters);
+  Future<Response<dynamic>> getInfoMovie(int id, Map<String, String> queryParameters) {
+    return _apiClient.getInfoMovie(id, queryParameters);
 
   }
 
   @override
-  Future<Response> moviePopular(Map<String, String> queryParameters) async {
-    return await _apiClient.moviePopular(queryParameters);
+  Future<Response<dynamic>> moviePopular(Map<String, String> queryParameters) {
+    return _apiClient.moviePopular(queryParameters);
 
   }
 

@@ -21,7 +21,7 @@ MovieInfoEntity _$MovieInfoEntityFromJson(Map<String, dynamic> json) {
     json['id'] as int,
     json['adult'] as bool,
     json['video'] as bool,
-    json['belongs_to_collection'] as int,
+    json['budget'] as int,
     (json['genres'] as List)
         ?.map((e) => e == null
             ? null
@@ -55,7 +55,7 @@ Map<String, dynamic> _$MovieInfoEntityToJson(MovieInfoEntity instance) =>
     <String, dynamic>{
       'adult': instance.adult,
       'backdrop_path': instance.backdropPath,
-      'belongs_to_collection': instance.budget,
+      'budget': instance.budget,
       'genres': instance.genres,
       'homepage': instance.homepage,
       'id': instance.id,
