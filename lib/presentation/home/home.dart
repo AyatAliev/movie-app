@@ -57,25 +57,26 @@ class Home extends StatelessWidget {
   }
 
   Widget _buildGridView(BuildContext context, PopularEntity movie) {
-    return GridView.count(
-        crossAxisCount: 1,
-        children: List.generate(movie.results.length, (index) {
+    return ListView.builder(
+        itemCount: movie.results.length,
+        itemBuilder: (context, position) {
           return Container(
+            padding: EdgeInsets.zero,
             margin: EdgeInsets.fromLTRB(0, 0, 0, 4),
             color: Colors.white,
             child: InkResponse(
               onTap: () {
-                _onTapHolder(context, movie.results[index]);
+                _onTapHolder(context, movie.results[position]);
               },
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(children: [
-                  _item(movie.results[index]),
+                  _item(movie.results[position]),
                 ]),
               ),
             ),
           );
-        }));
+        });
   }
 
   _onTapHolder(BuildContext context, PopularResults popularResults) {
