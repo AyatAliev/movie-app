@@ -3,8 +3,9 @@ import 'package:flutter_api_with_retrofit/common/api/api_client.dart';
 import '../movie_data_source.dart';
 
 class MovieImplDataSource extends MovieDataSource {
+  MovieImplDataSource(this._apiClient);
 
-  ApiClient _apiClient = ApiClient();
+  final ApiClient _apiClient;
 
   @override
   Future<Response<dynamic>> getInfoMovie(int id, Map<String, String> queryParameters) {

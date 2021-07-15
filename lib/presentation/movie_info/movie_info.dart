@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_api_with_retrofit/domain/model/movie_info_entity.dart';
 import 'package:flutter_api_with_retrofit/presentation/bloc/movie_info_bloc.dart';
+import 'package:flutter_api_with_retrofit/presentation/widget/rating_bar.dart';
 import 'package:flutter_api_with_retrofit/utils/constants.dart';
-import 'package:flutter_api_with_retrofit/widget/rating_bar.dart';
 import 'package:provider/provider.dart';
 
 class MovieInfo extends StatelessWidget {

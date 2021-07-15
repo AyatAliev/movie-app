@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_api_with_retrofit/di.dart';
 import 'package:flutter_api_with_retrofit/presentation/home/home.dart';
 
 void main() {
+  template();
   runApp(MyApp());
 }
 

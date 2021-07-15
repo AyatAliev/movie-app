@@ -30,11 +30,11 @@ class RatingBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Wrap(
-        children: List.generate(
-          itemCount,
-          (index) => _buildRating(context, index),
-        ),
-      );
+      children: List.generate(
+        itemCount,
+        (index) => _buildRating(context, index),
+      ),
+    );
   }
 
   Widget _buildRating(BuildContext context, int index) {
@@ -46,7 +46,7 @@ class RatingBar extends StatelessWidget {
     if (index >= initialRating) {
       _ratingWidget = _initStar(ratingWidget.empty);
     } else if (index >= initialRating - ratingOffset && allowHalfRating) {
-        _ratingWidget = _initStar(ratingWidget.half);
+      _ratingWidget = _initStar(ratingWidget.half);
     } else {
       _ratingWidget = _initStar(ratingWidget.full);
     }

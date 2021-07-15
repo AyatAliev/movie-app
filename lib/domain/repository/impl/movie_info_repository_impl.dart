@@ -3,8 +3,9 @@ import 'package:flutter_api_with_retrofit/data/dataSource/impl/movie_data_source
 import 'package:flutter_api_with_retrofit/domain/repository/movie_repository.dart';
 
 class MovieRepositoryImpl extends MovieRepository {
+  MovieRepositoryImpl(this._implDataSource);
 
-  MovieImplDataSource _implDataSource = MovieImplDataSource();
+  final MovieImplDataSource _implDataSource;
 
   @override
   Future<Response<dynamic>> getInfoMovie(int id, Map<String, String> queryParameters) {

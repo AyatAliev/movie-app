@@ -1,14 +1,14 @@
 import 'package:flutter_api_with_retrofit/domain/model/popular_entity.dart';
 import 'package:flutter_api_with_retrofit/domain/repository/impl/movie_info_repository_impl.dart';
 import 'package:flutter_api_with_retrofit/utils/constants.dart';
+import 'package:get_it/get_it.dart';
 import 'package:rxdart/rxdart.dart';
 
 class HomeBloc {
   HomeBloc() {
     moviePopular();
   }
-
-  final MovieRepositoryImpl _repository = MovieRepositoryImpl();
+  final MovieRepositoryImpl _repository = MovieRepositoryImpl(GetIt.instance());
 
   BehaviorSubject<PopularEntity> get subjectMoviePopular => _subjectMoviePopular;
   final BehaviorSubject<PopularEntity> _subjectMoviePopular = BehaviorSubject<PopularEntity>();
