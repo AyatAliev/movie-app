@@ -89,23 +89,27 @@ class Home extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       verticalDirection: VerticalDirection.down,
       children: [
-        Column(
-          children: [
-            Image.network("$MOVIE_BASE_URL${popularResults.posterPath}",
-                fit: BoxFit.fitWidth, width: 160),
-            Text(popularResults.releaseDate,
-                style: const TextStyle(fontWeight: FontWeight.bold),
-                textAlign: TextAlign.center),
-            Row(
-              children: [
-                Text(popularResults.voteCount.toString(),
-                    style: const TextStyle(fontWeight: FontWeight.bold)),
-                Padding(padding: EdgeInsets.fromLTRB(32, 0, 32, 0)),
-                Text(popularResults.voteAverage.toString(),
-                    style: const TextStyle(fontWeight: FontWeight.bold))
-              ],
-            )
-          ],
+        Container(
+          width: 160,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Image.network("$MOVIE_BASE_URL${popularResults.posterPath}",
+                  fit: BoxFit.fitWidth, width: 160),
+              Text(popularResults.releaseDate,
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(popularResults.voteCount.toString(),
+                      style: const TextStyle(fontWeight: FontWeight.bold)),
+                  Text(popularResults.voteAverage.toString(),
+                      style: const TextStyle(fontWeight: FontWeight.bold))
+                ],
+              )
+            ],
+          ),
         ),
         Flexible(
             child: Container(
