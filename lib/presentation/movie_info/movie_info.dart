@@ -4,7 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_api_with_retrofit/domain/model/movie_info_entity.dart';
 import 'package:flutter_api_with_retrofit/presentation/bloc/movie_info_bloc.dart';
 import 'package:flutter_api_with_retrofit/utils/constants.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:flutter_api_with_retrofit/widget/rating_bar.dart';
 import 'package:provider/provider.dart';
 
 class MovieInfo extends StatelessWidget {
@@ -72,6 +72,7 @@ class MovieInfo extends StatelessWidget {
                   fit: BoxFit.fitWidth),
             ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Flexible(
                   child: Text(movieInfoEntity.title,
@@ -81,7 +82,6 @@ class MovieInfo extends StatelessWidget {
                 ),
                 RatingBar(
                   initialRating: movieInfoEntity.voteAverage / 2,
-                  direction: Axis.horizontal,
                   allowHalfRating: true,
                   itemCount: 5,
                   ratingWidget: RatingWidget(
@@ -89,11 +89,7 @@ class MovieInfo extends StatelessWidget {
                       half: Image.asset('images/ic_star_half.png'),
                       empty: Image.asset('images/ic_star_empty.png')),
                   itemSize: 25,
-                  minRating: 1,
-                  onRatingUpdate: (rating) {
-                    print(rating);
-                  },
-                ),
+                )
               ],
             ),
             Text(movieInfoEntity.releaseDate,
