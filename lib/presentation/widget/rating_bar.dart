@@ -44,17 +44,17 @@ class RatingBar extends StatelessWidget {
     Widget _ratingWidget;
 
     if (index >= initialRating) {
-      _ratingWidget = _initStar(ratingWidget.empty);
+      _ratingWidget = _displayStar(ratingWidget.empty);
     } else if (index >= initialRating - ratingOffset && allowHalfRating) {
-      _ratingWidget = _initStar(ratingWidget.half);
+      _ratingWidget = _displayStar(ratingWidget.half);
     } else {
-      _ratingWidget = _initStar(ratingWidget.full);
+      _ratingWidget = _displayStar(ratingWidget.full);
     }
 
     return _ratingWidget;
   }
 
-  Widget _initStar(Widget star) {
+  Widget _displayStar(Widget star) {
     return SizedBox(
       height: itemSize,
       width: itemSize,
