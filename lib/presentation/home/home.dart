@@ -8,7 +8,44 @@ import 'package:flutter_api_with_retrofit/utils/constants.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
+  @override
+  _HomeState createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  final Map<String, String> queryParams = {
+    "api_key": "412fa864f04063853cd4fce43d6c1c13"
+  };
+
+  final List<PopularResults> _popularEntity = [];
+  ScrollController _scrollController;
+
+  _scrollListener() {
+    if (_scrollController.offset >=
+            _scrollController.position.maxScrollExtent &&
+        !_scrollController.position.outOfRange) {
+      setState(() {
+        print(queryParams);
+        // Provider.of<HomeBloc>(context).moviePopular();
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    _scrollController = ScrollController();
+    _scrollController.addListener(_scrollListener);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _scrollController.removeListener(_scrollListener);
+    _scrollController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Provider<HomeBloc>(
@@ -23,6 +60,7 @@ class Home extends StatelessWidget {
               stream: _homeBloc.subjectMoviePopular.stream,
               builder: (context, AsyncSnapshot<PopularEntity> snapshot) {
                 if (snapshot.hasData) {
+                  _popularEntity.addAll(snapshot.data.results);
                   return _buildGridView(context, snapshot.data);
                 } else if (snapshot.hasError) {
                   return _buildErrorWidget(snapshot.error);
@@ -59,7 +97,8 @@ class Home extends StatelessWidget {
 
   Widget _buildGridView(BuildContext context, PopularEntity movie) {
     return ListView.builder(
-        itemCount: movie.results.length,
+        controller: _scrollController,
+        itemCount: _popularEntity.length,
         itemBuilder: (context, position) {
           return Container(
             padding: EdgeInsets.zero,
@@ -67,12 +106,12 @@ class Home extends StatelessWidget {
             color: Colors.white,
             child: InkResponse(
               onTap: () {
-                _onTapHolder(context, movie.results[position]);
+                _onTapHolder(context, _popularEntity[position]);
               },
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(children: [
-                  _item(movie.results[position]),
+                  _item(_popularEntity[position]),
                 ]),
               ),
             ),
