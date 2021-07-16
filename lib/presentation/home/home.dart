@@ -5,13 +5,14 @@ import 'package:flutter_api_with_retrofit/domain/model/popular_entity.dart';
 import 'package:flutter_api_with_retrofit/presentation/bloc/home_bloc.dart';
 import 'package:flutter_api_with_retrofit/presentation/movie_info/movie_info.dart';
 import 'package:flutter_api_with_retrofit/utils/constants.dart';
+import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 
 class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Provider<HomeBloc>(
-      create: (_) => HomeBloc(),
+      create: (_) => HomeBloc(GetIt.instance()),
       dispose: (_, HomeBloc homeBloc) => homeBloc.dispose(),
       child: Consumer<HomeBloc>(builder: (context, _homeBloc, child) {
         return SafeArea(

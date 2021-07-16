@@ -1,25 +1,29 @@
 import 'package:flutter_api_with_retrofit/domain/model/popular_entity.dart';
-import 'package:flutter_api_with_retrofit/domain/repository/impl/movie_info_repository_impl.dart';
+import 'package:flutter_api_with_retrofit/domain/usecase/movie_use_case.dart';
 import 'package:flutter_api_with_retrofit/utils/constants.dart';
-import 'package:get_it/get_it.dart';
 import 'package:rxdart/rxdart.dart';
 
 class HomeBloc {
-  HomeBloc() {
+  HomeBloc(this._movieUseCase) {
     moviePopular();
   }
-  final MovieRepositoryImpl _repository = MovieRepositoryImpl(GetIt.instance());
+  final MovieUseCase _movieUseCase;
 
   BehaviorSubject<PopularEntity> get subjectMoviePopular => _subjectMoviePopular;
   final BehaviorSubject<PopularEntity> _subjectMoviePopular = BehaviorSubject<PopularEntity>();
 
   moviePopular() async {
-    var response = await _repository.moviePopular(queryParams);
-    PopularEntity movies = PopularEntity.fromJson(response.data);
-    _subjectMoviePopular.sink.add(movies);
+    var response = await _movieUseCase.moviePopular(queryParams);
+    response.fold((l) => print(l) , (r) => setData(r.data));
+
   }
 
   dispose() {
     _subjectMoviePopular.close();
+  }
+
+  setData(data) {
+    PopularEntity movies = PopularEntity.fromJson(data);
+    _subjectMoviePopular.sink.add(movies);
   }
 }
